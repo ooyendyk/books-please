@@ -16,7 +16,7 @@ Table users as u {
   type user_type [not null, default: 'user']
 }
 
-Table kindle as k {
+Table kindles as k {
   id int [pk, not null, unique, increment]
   email varchar [not null]
   device_name varchar
@@ -24,8 +24,8 @@ Table kindle as k {
 }
 
 ref: books.user_id - users.id
-ref: books.kindle_id - kindle.id
-ref: kindle.user_id - users.id
+ref: books.kindle_id - kindles.id
+ref: users.id <> kindles.id
 
 enum user_type {
   user

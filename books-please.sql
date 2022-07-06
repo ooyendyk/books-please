@@ -25,7 +25,7 @@ CREATE TABLE "users" (
   "type" user_type NOT NULL DEFAULT 'user'
 );
 
-CREATE TABLE "kindle" (
+CREATE TABLE "kindles" (
   "id" SERIAL UNIQUE PRIMARY KEY NOT NULL,
   "email" varchar NOT NULL,
   "device_name" varchar,
@@ -34,6 +34,14 @@ CREATE TABLE "kindle" (
 
 ALTER TABLE "users" ADD FOREIGN KEY ("id") REFERENCES "books" ("user_id");
 
-ALTER TABLE "kindle" ADD FOREIGN KEY ("id") REFERENCES "books" ("kindle_id");
+ALTER TABLE "kindles" ADD FOREIGN KEY ("id") REFERENCES "books" ("kindle_id");
 
-ALTER TABLE "users" ADD FOREIGN KEY ("id") REFERENCES "kindle" ("user_id");
+CREATE TABLE "users_kindles" (
+  "users_id" int NOT NULL,
+  "kindles_id" int NOT NULL,
+  PRIMARY KEY ("users_id", "kindles_id")
+);
+
+ALTER TABLE "users_kindles" ADD FOREIGN KEY ("users_id") REFERENCES "users" ("id");
+
+ALTER TABLE "users_kindles" ADD FOREIGN KEY ("kindles_id") REFERENCES "kindles" ("id");
