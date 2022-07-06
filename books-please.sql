@@ -8,10 +8,11 @@ CREATE TYPE "book_status" AS ENUM (
   'fulfilled'
 );
 
-CREATE TABLE "books" (
+CREATE TABLE "book_requests" (
   "id" SERIAL UNIQUE PRIMARY KEY NOT NULL,
   "title" varchar,
   "author" varchar,
+  "isbn" varchar,
   "status" book_status NOT NULL DEFAULT 'pending',
   "user_id" int NOT NULL,
   "kindle_id" int NOT NULL
@@ -32,9 +33,9 @@ CREATE TABLE "kindles" (
   "user_id" int NOT NULL
 );
 
-ALTER TABLE "users" ADD FOREIGN KEY ("id") REFERENCES "books" ("user_id");
+ALTER TABLE "users" ADD FOREIGN KEY ("id") REFERENCES "book_requests" ("user_id");
 
-ALTER TABLE "kindles" ADD FOREIGN KEY ("id") REFERENCES "books" ("kindle_id");
+ALTER TABLE "kindles" ADD FOREIGN KEY ("id") REFERENCES "book_requests" ("kindle_id");
 
 CREATE TABLE "users_kindles" (
   "users_id" int NOT NULL,
