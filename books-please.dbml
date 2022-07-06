@@ -1,0 +1,38 @@
+
+Table books as b {
+  id int [pk, not null, unique, increment]
+  title varchar
+  author varchar
+  status book_status [not null, default: 'pending']
+  user_id int [not null]
+  kindle_id int [not null]
+}
+
+Table users as u {
+  id int [pk, not null, unique, increment]
+  email varchar
+  password varchar [not null]
+  name varchar
+  type user_type [not null, default: 'user']
+}
+
+Table kindle as k {
+  id int [pk, not null, unique, increment]
+  email varchar [not null]
+  device_name varchar
+  user_id int [not null]
+}
+
+ref: books.user_id - users.id
+ref: books.kindle_id - kindle.id
+ref: kindle.user_id - users.id
+
+enum user_type {
+  user
+  admin
+}
+
+enum book_status {
+  pending
+  fulfilled
+}
