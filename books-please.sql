@@ -1,57 +1,13 @@
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SELECT pg_catalog.set_config('search_path', '', false);
-SET check_function_bodies = false;
-SET xmloption = content;
-SET client_min_messages = warning;
-SET row_security = off;
+create schema books_please;
 
---
--- Name: my_db; Type: DATABASE; Schema: -; Owner: postgres
---
+set search_path to books_please;
 
-CREATE DATABASE my_db WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'en_US.utf8' LC_CTYPE = 'en_US.utf8';
-
-
-ALTER DATABASE my_db OWNER TO postgres;
-
-\connect my_db
-
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SELECT pg_catalog.set_config('search_path', '', false);
-SET check_function_bodies = false;
-SET xmloption = content;
-SET client_min_messages = warning;
-SET row_security = off;
-
-SET default_tablespace = '';
-
-SET default_with_oids = false;
-
---
--- Name: clients; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.clients (
-    id integer NOT NULL,
-    name character varying(150) NOT NULL
-);
-
-
-ALTER TABLE public.clients OWNER TO postgres;
-
-
+ALTER DATABASE postgres SET search_path = books_please;
 
 CREATE TYPE "user_type" AS ENUM (
   'user',
-  'admin'
+  'admin',
+  'test'
 );
 
 CREATE TYPE "book_status" AS ENUM (
@@ -84,9 +40,9 @@ CREATE TABLE "kindles" (
   "user_id" int NOT NULL
 );
 
-ALTER TABLE "users" ADD FOREIGN KEY ("id") REFERENCES "book_requests" ("user_id");
+ALTER TABLE "book_requests" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
 
-ALTER TABLE "kindles" ADD FOREIGN KEY ("id") REFERENCES "book_requests" ("kindle_id");
+ALTER TABLE "book_requests" ADD FOREIGN KEY ("kindle_id") REFERENCES "kindles" ("id");
 
 CREATE TABLE "users_kindles" (
   "users_id" int NOT NULL,

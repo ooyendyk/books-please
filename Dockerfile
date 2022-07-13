@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM postgres:12-alpine
+FROM postgres:12
 COPY books-please.sql /docker-entrypoint-initdb.d/
 # WORKDIR /app
 # COPY . .
